@@ -185,11 +185,95 @@
                     </tabBar>
                     <connections>
                         <segue destination="06q-6x-fyE" kind="relationship" relationship="viewControllers" id="7w5-KK-XvN"/>
+                        <segue destination="1TC-tG-wQU" kind="relationship" relationship="viewControllers" id="NLD-Hw-GaH"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="evM-Aa-dah" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="122.90076335877862" y="-2.1126760563380285"/>
+        </scene>
+        <!--Sepetim-->
+        <scene sceneID="7hL-dB-RTH">
+            <objects>
+                <viewController id="1TC-tG-wQU" customClass="CartVC" customModule="BuyssyApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zvY-Ia-cSl">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="200" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Mhj-dS-cBe">
+                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CartCell" id="kGp-iA-bk6" customClass="CartCell" customModule="BuyssyApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="200"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kGp-iA-bk6" id="G9T-7F-WiE">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tvG-CZ-yvM">
+                                                    <rect key="frame" x="32" y="23" width="118" height="154"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="marka" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ROY-Q0-6Vi">
+                                                    <rect key="frame" x="170" y="51" width="47" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="adet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnk-jQ-KmE">
+                                                    <rect key="frame" x="170" y="112" width="34" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Trn-Dq-LkW">
+                                                    <rect key="frame" x="325" y="44" width="48" height="35"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="deleteButtonTapped:" destination="kGp-iA-bk6" eventType="touchUpInside" id="DFJ-vL-jlx"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ROY-Q0-6Vi" firstAttribute="top" secondItem="G9T-7F-WiE" secondAttribute="topMargin" constant="40" id="9Kd-w0-Jt5"/>
+                                                <constraint firstItem="Trn-Dq-LkW" firstAttribute="top" secondItem="G9T-7F-WiE" secondAttribute="top" constant="44" id="ANb-HY-onq"/>
+                                                <constraint firstItem="Dnk-jQ-KmE" firstAttribute="top" secondItem="ROY-Q0-6Vi" secondAttribute="bottom" constant="40" id="HPB-Zm-w1D"/>
+                                                <constraint firstAttribute="trailing" secondItem="Trn-Dq-LkW" secondAttribute="trailing" constant="20" id="KAs-lF-GnV"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="tvG-CZ-yvM" secondAttribute="bottom" constant="12" id="bBx-hO-zXk"/>
+                                                <constraint firstItem="tvG-CZ-yvM" firstAttribute="top" secondItem="G9T-7F-WiE" secondAttribute="topMargin" constant="12" id="iaR-uu-cT5"/>
+                                                <constraint firstItem="ROY-Q0-6Vi" firstAttribute="leading" secondItem="tvG-CZ-yvM" secondAttribute="trailing" constant="20" id="nPo-HL-qjW"/>
+                                                <constraint firstItem="Dnk-jQ-KmE" firstAttribute="leading" secondItem="tvG-CZ-yvM" secondAttribute="trailing" constant="20" id="sCN-aR-EOP"/>
+                                                <constraint firstItem="tvG-CZ-yvM" firstAttribute="width" secondItem="G9T-7F-WiE" secondAttribute="width" multiplier="0.3" id="v2q-i4-wLN"/>
+                                                <constraint firstItem="tvG-CZ-yvM" firstAttribute="leading" secondItem="G9T-7F-WiE" secondAttribute="leadingMargin" constant="12" id="y1N-Ze-7qu"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="adetLabel" destination="Dnk-jQ-KmE" id="EEl-UE-l5q"/>
+                                            <outlet property="brandLabel" destination="ROY-Q0-6Vi" id="4tt-zC-jTu"/>
+                                            <outlet property="productImageView" destination="tvG-CZ-yvM" id="0aK-G9-QGF"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="acR-uD-evX"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Mhj-dS-cBe" firstAttribute="top" secondItem="acR-uD-evX" secondAttribute="top" id="Fim-3e-Voj"/>
+                            <constraint firstItem="Mhj-dS-cBe" firstAttribute="leading" secondItem="acR-uD-evX" secondAttribute="leading" id="bOJ-fs-lo9"/>
+                            <constraint firstItem="acR-uD-evX" firstAttribute="bottom" secondItem="Mhj-dS-cBe" secondAttribute="bottom" id="fzl-3u-FoO"/>
+                            <constraint firstItem="acR-uD-evX" firstAttribute="trailing" secondItem="Mhj-dS-cBe" secondAttribute="trailing" id="z93-62-Nve"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Sepetim" image="cart" catalog="system" selectedImage="cart.fill" id="n4r-Tp-aN9"/>
+                    <connections>
+                        <outlet property="cartProductsTableView" destination="Mhj-dS-cBe" id="aFh-BY-fO3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n9u-up-Vfj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1937" y="299"/>
         </scene>
         <!--Anasayfa-->
         <scene sceneID="H98-mT-6Kv">
@@ -212,8 +296,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="cart" catalog="system" width="128" height="102"/>
+        <image name="cart.fill" catalog="system" width="128" height="102"/>
         <image name="house" catalog="system" width="128" height="104"/>
         <image name="house.fill" catalog="system" width="128" height="104"/>
+        <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

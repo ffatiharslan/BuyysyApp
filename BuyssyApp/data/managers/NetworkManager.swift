@@ -13,6 +13,8 @@ class NetworkManager {
     
     var productList = BehaviorSubject<[Products]>(value: [Products]())
     
+    var cartProductList = BehaviorSubject<[CartProducts]>(value: [CartProducts]())
+    
     func fetchProducts() {
         let url = "http://kasimadalan.pe.hu/urunler/tumUrunleriGetir.php"
         
@@ -63,6 +65,28 @@ class NetworkManager {
                     print(error.localizedDescription)
                 }
             }
+        }
+    }
+    
+    
+    func fetchCartProducts(kullaniciAdi: String) {
+        let url = "http://kasimadalan.pe.hu/urunler/sepettekiUrunleriGetir.php"
+        
+        let parameters: Parameters = ["kullaniciAdi": kullaniciAdi]
+        
+        AF.request(url, method: .post, parameters: parameters).response{ response in
+            if let data  = response.data {
+                do{
+                    let response = try JSONDecoder().decode(CartProductsResponse.self, from: data)
+                    if let list = response.urunler_sepeti {
+                        self.cartProductList.onNext(list) //Tetikleme
+                    }
+                }
+                catch {
+                    print(error.localizedDescription)
+                }
+            }
+            
         }
     }
 }
