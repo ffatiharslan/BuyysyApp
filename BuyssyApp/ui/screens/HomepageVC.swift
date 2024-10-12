@@ -50,6 +50,17 @@ class HomepageVC: UIViewController {
         
         viewModel.fetchProducts()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetail" {
+            if let product = sender as? Products {
+                let destinationVC = segue.destination as! ProductDetailVC
+                destinationVC.product = product
+                
+            }
+            
+        }
+    }
 }
 
 
@@ -79,6 +90,8 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        <#code#>
+        let product = productList[indexPath.row]
+        //collectionView.deselectItem(at: indexPath, animated: true)
+        performSegue(withIdentifier: "toDetail", sender: product)
     }
 }
