@@ -19,6 +19,8 @@ class CartVC: UIViewController {
     
     var viewModel = CartViewModel()
     
+    var sepetId: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,7 +43,7 @@ class CartVC: UIViewController {
     }
 }
 
-extension CartVC: UITableViewDelegate, UITableViewDataSource {
+extension CartVC: UITableViewDelegate, UITableViewDataSource, CellProtocol {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cartProductList.count
     }
@@ -58,6 +60,19 @@ extension CartVC: UITableViewDelegate, UITableViewDataSource {
         cell.brandLabel.text = cartProduct.ad
         cell.adetLabel.text = "\(cartProduct.siparisAdeti!)"
         
+        sepetId = cartProduct.sepetId
+        
+        cell.cellProtocol = self
+        cell.indexPath = indexPath
+        
         return cell
+    }
+    
+    
+    func deleteButtonTapped(indexPath: IndexPath) {
+        guard let sepetId = sepetId else {
+            return
+        }
+        viewModel.deleteFromCart(sepetId: sepetId, kullaniciAdi: viewModel.kullaniciAdi)
     }
 }

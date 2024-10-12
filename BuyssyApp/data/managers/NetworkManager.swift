@@ -89,4 +89,42 @@ class NetworkManager {
             
         }
     }
+    
+    
+    func deleteFromCart(sepetId: Int, kullaniciAdi: String) {
+        
+        let url = "http://kasimadalan.pe.hu/urunler/sepettenUrunSil.php"
+        let params: Parameters = ["sepetId": sepetId, "kullaniciAdi": kullaniciAdi]
+        
+        AF.request(url, method: .post, parameters: params).response { response in
+            if let data  = response.data {
+                do{
+                    let response = try JSONDecoder().decode(CRUDResponse.self, from: data)
+                    print("Başarı: \(response.success!)")
+                    print("Mesaj: \(response.message!)")
+                }
+                catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
 }
+
+/*
+ func kisiSil(kisi_id: Int) {
+     let url = "http://kasimadalan.pe.hu/kisiler/delete_kisiler.php"
+     let params: Parameters = ["kisi_id": kisi_id]
+     
+     AF.request(url, method: .post, parameters: params).response{ response in
+         if let data  = response.data {
+             do{
+                 let cevap = try JSONDecoder().decode(CRUDCevap.self, from: data)
+                 print("Başarı: \(cevap.success!)")
+                 print("Mesaj: \(cevap.message!)")
+             }
+             catch {
+                 print(error.localizedDescription)
+             }
+         }
+     }*/

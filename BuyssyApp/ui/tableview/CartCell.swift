@@ -7,13 +7,19 @@
 
 import UIKit
 
+protocol CellProtocol {
+    func deleteButtonTapped(indexPath: IndexPath)
+}
+
 class CartCell: UITableViewCell {
     
     @IBOutlet weak var productImageView: UIImageView!
-    
     @IBOutlet weak var brandLabel: UILabel!
-    
     @IBOutlet weak var adetLabel: UILabel!
+    
+    var cellProtocol: CellProtocol?
+    var indexPath: IndexPath?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -23,5 +29,6 @@ class CartCell: UITableViewCell {
     }
 
     @IBAction func deleteButtonTapped(_ sender: Any) {
+        cellProtocol?.deleteButtonTapped(indexPath: indexPath!)
     }
 }

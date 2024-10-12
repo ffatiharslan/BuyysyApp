@@ -20,7 +20,14 @@ class CartViewModel {
         cartProductList = networkManager.cartProductList
     }
     
+    
     func fetchCartProducts(kullaniciAdi: String) {
         networkManager.fetchCartProducts(kullaniciAdi: kullaniciAdi)
+    }
+    
+    
+    func deleteFromCart(sepetId: Int, kullaniciAdi: String) {
+        networkManager.deleteFromCart(sepetId: sepetId, kullaniciAdi: kullaniciAdi)
+        fetchCartProducts(kullaniciAdi: kullaniciAdi)
     }
 }
