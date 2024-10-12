@@ -11,11 +11,12 @@ class ProductDetailVC: UIViewController {
 
     var product: Products?
     
+    var viewModel = ProductDetailViewModel()
     
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var adetLabel: UILabel!
-    
+    @IBOutlet weak var adetStepper: UIStepper!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,16 @@ class ProductDetailVC: UIViewController {
     
     
     @IBAction func addToCartButtonTapped(_ sender: UIButton) {
-        
+        if let product = product {
+            viewModel.addToCart(ad: product.ad!,
+                                resim: product.resim!,
+                                kategori: product.kategori!,
+                                fiyat: product.fiyat!,
+                                marka: product.marka!,
+                                siparisAdeti: Int(adetStepper.value),
+                                kullaniciAdi: "FatihArslan")
+        }
     }
     
 }
+

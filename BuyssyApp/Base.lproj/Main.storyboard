@@ -165,6 +165,7 @@
                     <navigationItem key="navigationItem" id="8xy-AO-cbx"/>
                     <connections>
                         <outlet property="adetLabel" destination="SUR-Os-dqc" id="Yt6-Pj-ZWg"/>
+                        <outlet property="adetStepper" destination="eez-Jp-KQG" id="iXP-6D-At9"/>
                         <outlet property="productImageView" destination="DWy-ig-kPp" id="VXd-vD-aYS"/>
                         <outlet property="productNameLabel" destination="XvJ-BP-CRR" id="Hhf-Ru-bzO"/>
                     </connections>

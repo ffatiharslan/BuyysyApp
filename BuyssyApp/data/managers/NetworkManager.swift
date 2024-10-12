@@ -31,4 +31,38 @@ class NetworkManager {
             
         }
     }
+    
+    
+    func addToCart(ad: String,
+                   resim: String,
+                   kategori: String,
+                   fiyat: Int,
+                   marka: String,
+                   siparisAdeti: Int,
+                   kullaniciAdi: String) {
+        
+        let url = "http://kasimadalan.pe.hu/urunler/sepeteUrunEkle.php"
+        let parameters: Parameters = [
+            "ad": ad,
+            "resim": resim,
+            "kategori": kategori,
+            "fiyat": fiyat,
+            "marka": marka,
+            "siparisAdeti": siparisAdeti,
+            "kullaniciAdi": kullaniciAdi
+        ]
+        
+        AF.request(url, method: .post, parameters: parameters).response{ response in
+            if let data  = response.data {
+                do{
+                    let response = try JSONDecoder().decode(CRUDResponse.self, from: data)
+                    print("Başarı: \(response.success!)")
+                    print("Mesaj: \(response.message!)")
+                }
+                catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
 }
