@@ -6,3 +6,19 @@
 //
 
 import Foundation
+import RxSwift
+
+class HomepageViewModel {
+    
+    var networkManager = NetworkManager()
+    var productList = BehaviorSubject<[Products]>(value: [Products]())
+    
+    init() {
+        fetchProducts()
+        productList = networkManager.productList
+    }
+    
+    func fetchProducts() {
+        networkManager.fetchProducts()
+    }
+}
