@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class LoginViewModel {
     
@@ -25,6 +26,13 @@ class LoginViewModel {
             }
         }
     }
+    
+    
+    // Google Sign-In işlemini başlatır
+        func signInWithGoogle(presentingVC: UIViewController, completion: @escaping (Result<Void, Error>) -> Void) {
+            authService.signInWithGoogle(presentingVC: presentingVC, completion: completion)
+        }
+    
     
     // Oturum açık mı kontrol et
     func isLoggedIn() -> Bool {

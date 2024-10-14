@@ -36,19 +36,30 @@ class LoginVC: UIViewController {
         }
     }
     
+    @IBAction func signInWithGoogleButtonTapped(_ sender: Any) {
+        // Google Sign-In işlemini başlatıyoruz
+        viewModel.signInWithGoogle(presentingVC: self) { [weak self] result in
+            switch result {
+            case .success:
+                self?.navigateToMainScreen()
+            case .failure(let error):
+                self?.showAlert(message: "Giriş hatası: \(error.localizedDescription)")
+            }
+        }
+    }
     
     private func navigateToMainScreen() {
-           let storyboard = UIStoryboard(name: "Main", bundle: nil)
-           let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
-
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
+        
         guard let window = UIApplication.shared.windows.first else { return }
-           window.rootViewController = mainTabBarController
-           UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
-       }
-
-       private func showAlert(message: String) {
-           let alert = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
-           alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
-           present(alert, animated: true, completion: nil)
-       }
+        window.rootViewController = mainTabBarController
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
+    }
+    
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }

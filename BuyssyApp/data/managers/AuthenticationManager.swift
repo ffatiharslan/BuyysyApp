@@ -7,6 +7,9 @@
 
 import Foundation
 import FirebaseAuth
+import UIKit
+import FirebaseCore
+import GoogleSignIn
 
 class AuthenticationManager {
     // Firebase'de email ve şifreyle kayıt olma
@@ -45,4 +48,45 @@ class AuthenticationManager {
             completion(.failure(error))
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    func signInWithGoogle(presentingVC: UIViewController, completion: @escaping (Result<Void, Error>) -> Void) {
+            guard let clientID = FirebaseApp.app()?.options.clientID else {
+                completion(.failure(NSError(domain: "Firebase", code: -1, userInfo: [NSLocalizedDescriptionKey: "Client ID bulunamadı."])))
+                return
+            }
+
+            let config = GIDConfiguration(clientID: clientID)
+
+            // Google Sign-In işlemini başlatıyoruz
+            GIDSignIn.sharedInstance.signIn(withPresenting: presentingVC) { signInResult, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+
+                guard let user = signInResult?.user,
+                      let idToken = user.idToken?.tokenString else {
+                    completion(.failure(NSError(domain: "GoogleAuth", code: 0, userInfo: [NSLocalizedDescriptionKey: "Authentication bilgisi alınamadı."])))
+                    return
+                }
+
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
+
+                // Firebase Authentication ile oturum açma
+                Auth.auth().signIn(with: credential) { _, error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(()))
+                    }
+                }
+            }
+        }
+    
 }

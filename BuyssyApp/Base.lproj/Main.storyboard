@@ -268,6 +268,16 @@
                                     <segue destination="s0V-Fh-Dx2" kind="show" id="FYA-B4-g4A"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q4D-Ir-aDY">
+                                <rect key="frame" x="40" y="590" width="313" height="35"/>
+                                <color key="backgroundColor" systemColor="systemPinkColor"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Google ile giriş yap"/>
+                                <connections>
+                                    <action selector="signInWithGoogleButtonTapped:" destination="7JG-ah-LCy" eventType="touchUpInside" id="qsv-dm-KG2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="P5c-VC-zT0"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -277,9 +287,12 @@
                             <constraint firstItem="RhB-1b-ogp" firstAttribute="leading" secondItem="P5c-VC-zT0" secondAttribute="leading" constant="30" id="834-c0-l8p"/>
                             <constraint firstItem="Qg9-5o-rQC" firstAttribute="leading" secondItem="P5c-VC-zT0" secondAttribute="leading" constant="30" id="DAK-IG-TNj"/>
                             <constraint firstItem="RhB-1b-ogp" firstAttribute="top" secondItem="tTL-RA-DHo" secondAttribute="bottom" constant="100" id="Drq-xh-3Nq"/>
+                            <constraint firstItem="P5c-VC-zT0" firstAttribute="trailing" secondItem="q4D-Ir-aDY" secondAttribute="trailing" constant="40" id="QLc-MZ-PKm"/>
                             <constraint firstItem="9tW-QO-QuJ" firstAttribute="leading" secondItem="P5c-VC-zT0" secondAttribute="leading" constant="100" id="Qur-1T-AdE"/>
+                            <constraint firstItem="q4D-Ir-aDY" firstAttribute="top" secondItem="Qg9-5o-rQC" secondAttribute="bottom" constant="50" id="Xbb-CN-XBb"/>
                             <constraint firstItem="P5c-VC-zT0" firstAttribute="trailing" secondItem="RhB-1b-ogp" secondAttribute="trailing" constant="30" id="bZC-Q0-PE0"/>
                             <constraint firstItem="P5c-VC-zT0" firstAttribute="trailing" secondItem="tTL-RA-DHo" secondAttribute="trailing" constant="30" id="cbF-Sz-XOS"/>
+                            <constraint firstItem="q4D-Ir-aDY" firstAttribute="leading" secondItem="P5c-VC-zT0" secondAttribute="leading" constant="40" id="dQK-kT-6S0"/>
                             <constraint firstItem="9tW-QO-QuJ" firstAttribute="top" secondItem="Qg9-5o-rQC" secondAttribute="bottom" constant="142" id="jgb-Q5-CUZ"/>
                             <constraint firstItem="Qg9-5o-rQC" firstAttribute="top" secondItem="RhB-1b-ogp" secondAttribute="bottom" constant="134" id="kpj-Hp-MW0"/>
                             <constraint firstItem="P5c-VC-zT0" firstAttribute="trailing" secondItem="Qg9-5o-rQC" secondAttribute="trailing" constant="30" id="ojx-sX-jKG"/>
@@ -455,6 +468,9 @@
         <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
