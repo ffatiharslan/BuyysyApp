@@ -200,6 +200,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sepetiniz Boş" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECu-pj-rWg">
+                                <rect key="frame" x="30" y="396" width="333" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="200" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Mhj-dS-cBe">
                                 <rect key="frame" x="0.0" y="59" width="393" height="710"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -261,14 +267,19 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Mhj-dS-cBe" firstAttribute="top" secondItem="acR-uD-evX" secondAttribute="top" id="Fim-3e-Voj"/>
+                            <constraint firstItem="ECu-pj-rWg" firstAttribute="centerX" secondItem="zvY-Ia-cSl" secondAttribute="centerX" id="Jy1-YU-jZ2"/>
+                            <constraint firstItem="acR-uD-evX" firstAttribute="trailing" secondItem="ECu-pj-rWg" secondAttribute="trailing" constant="30" id="X6y-Ke-ZJG"/>
+                            <constraint firstItem="ECu-pj-rWg" firstAttribute="leading" secondItem="acR-uD-evX" secondAttribute="leading" constant="30" id="ZsF-QL-bcS"/>
                             <constraint firstItem="Mhj-dS-cBe" firstAttribute="leading" secondItem="acR-uD-evX" secondAttribute="leading" id="bOJ-fs-lo9"/>
                             <constraint firstItem="acR-uD-evX" firstAttribute="bottom" secondItem="Mhj-dS-cBe" secondAttribute="bottom" id="fzl-3u-FoO"/>
+                            <constraint firstItem="ECu-pj-rWg" firstAttribute="centerY" secondItem="zvY-Ia-cSl" secondAttribute="centerY" id="ls8-UJ-X5N"/>
                             <constraint firstItem="acR-uD-evX" firstAttribute="trailing" secondItem="Mhj-dS-cBe" secondAttribute="trailing" id="z93-62-Nve"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Sepetim" image="cart" catalog="system" selectedImage="cart.fill" id="n4r-Tp-aN9"/>
                     <connections>
                         <outlet property="cartProductsTableView" destination="Mhj-dS-cBe" id="aFh-BY-fO3"/>
+                        <outlet property="emptyStateLabel" destination="ECu-pj-rWg" id="Goj-9a-LjY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n9u-up-Vfj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

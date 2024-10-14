@@ -12,28 +12,25 @@ import RxSwift
 class NetworkManager {
     
     var productList = BehaviorSubject<[Products]>(value: [Products]())
-    
     var cartProductList = BehaviorSubject<[CartProducts]>(value: [CartProducts]())
     
-    func fetchProducts() {
+    func fetchProducts(completion: @escaping (Result<[Products], Error>) -> Void) {
         let url = "http://kasimadalan.pe.hu/urunler/tumUrunleriGetir.php"
         
-        AF.request(url, method: .get).response{ response in
-            if let data  = response.data {
-                do{
-                    let cevap = try JSONDecoder().decode(ProductsResponse.self, from: data)
-                    if let list = cevap.urunler {
-                        self.productList.onNext(list) //Tetikleme
+        AF.request(url, method: .get).response { response in
+            if let data = response.data {
+                do {
+                    let decodedResponse = try JSONDecoder().decode(ProductsResponse.self, from: data)
+                    if let list = decodedResponse.urunler {
+                        self.productList.onNext(list)
+                        completion(.success(list))
                     }
-                }
-                catch {
-                    print(error.localizedDescription)
+                } catch {
+                    completion(.failure(error))
                 }
             }
-            
         }
     }
-    
     
     func addToCart(ad: String,
                    resim: String,
@@ -41,90 +38,60 @@ class NetworkManager {
                    fiyat: Int,
                    marka: String,
                    siparisAdeti: Int,
-                   kullaniciAdi: String) {
+                   kullaniciAdi: String,
+                   completion: @escaping (Result<String, Error>) -> Void) {
         
         let url = "http://kasimadalan.pe.hu/urunler/sepeteUrunEkle.php"
         let parameters: Parameters = [
-            "ad": ad,
-            "resim": resim,
-            "kategori": kategori,
-            "fiyat": fiyat,
-            "marka": marka,
-            "siparisAdeti": siparisAdeti,
-            "kullaniciAdi": kullaniciAdi
+            "ad": ad, "resim": resim, "kategori": kategori, "fiyat": fiyat,
+            "marka": marka, "siparisAdeti": siparisAdeti, "kullaniciAdi": kullaniciAdi
         ]
         
-        AF.request(url, method: .post, parameters: parameters).response{ response in
-            if let data  = response.data {
-                do{
-                    let response = try JSONDecoder().decode(CRUDResponse.self, from: data)
-                    print("Başarı: \(response.success!)")
-                    print("Mesaj: \(response.message!)")
-                }
-                catch {
-                    print(error.localizedDescription)
+        AF.request(url, method: .post, parameters: parameters).response { response in
+            if let data = response.data {
+                do {
+                    let decodedResponse = try JSONDecoder().decode(CRUDResponse.self, from: data)
+                    completion(.success(decodedResponse.message ?? "Başarılı"))
+                } catch {
+                    completion(.failure(error))
                 }
             }
         }
     }
     
-    
-    func fetchCartProducts(kullaniciAdi: String) {
+    func fetchCartProducts(kullaniciAdi: String, completion: @escaping (Result<[CartProducts], Error>) -> Void) {
         let url = "http://kasimadalan.pe.hu/urunler/sepettekiUrunleriGetir.php"
-        
         let parameters: Parameters = ["kullaniciAdi": kullaniciAdi]
         
-        AF.request(url, method: .post, parameters: parameters).response{ response in
-            if let data  = response.data {
-                do{
-                    let response = try JSONDecoder().decode(CartProductsResponse.self, from: data)
-                    if let list = response.urunler_sepeti {
-                        self.cartProductList.onNext(list) //Tetikleme
+        AF.request(url, method: .post, parameters: parameters).response { response in
+            if let data = response.data {
+                do {
+                    let decodedResponse = try JSONDecoder().decode(CartProductsResponse.self, from: data)
+                    if let list = decodedResponse.urunler_sepeti {
+                        self.cartProductList.onNext(list)
+                        completion(.success(list))
                     }
-                }
-                catch {
-                    print(error.localizedDescription)
+                } catch {
+                    completion(.failure(error))
                 }
             }
-            
         }
     }
     
-    
-    func deleteFromCart(sepetId: Int, kullaniciAdi: String) {
-        
+    func deleteFromCart(sepetId: Int, kullaniciAdi: String,
+                        completion: @escaping (Result<String, Error>) -> Void) {
         let url = "http://kasimadalan.pe.hu/urunler/sepettenUrunSil.php"
-        let params: Parameters = ["sepetId": sepetId, "kullaniciAdi": kullaniciAdi]
+        let parameters: Parameters = ["sepetId": sepetId, "kullaniciAdi": kullaniciAdi]
         
-        AF.request(url, method: .post, parameters: params).response { response in
-            if let data  = response.data {
-                do{
-                    let response = try JSONDecoder().decode(CRUDResponse.self, from: data)
-                    print("Başarı: \(response.success!)")
-                    print("Mesaj: \(response.message!)")
-                }
-                catch {
-                    print(error.localizedDescription)
+        AF.request(url, method: .post, parameters: parameters).response { response in
+            if let data = response.data {
+                do {
+                    let decodedResponse = try JSONDecoder().decode(CRUDResponse.self, from: data)
+                    completion(.success(decodedResponse.message ?? "Silme işlemi başarılı"))
+                } catch {
+                    completion(.failure(error))
                 }
             }
         }
     }
 }
-
-/*
- func kisiSil(kisi_id: Int) {
-     let url = "http://kasimadalan.pe.hu/kisiler/delete_kisiler.php"
-     let params: Parameters = ["kisi_id": kisi_id]
-     
-     AF.request(url, method: .post, parameters: params).response{ response in
-         if let data  = response.data {
-             do{
-                 let cevap = try JSONDecoder().decode(CRUDCevap.self, from: data)
-                 print("Başarı: \(cevap.success!)")
-                 print("Mesaj: \(cevap.message!)")
-             }
-             catch {
-                 print(error.localizedDescription)
-             }
-         }
-     }*/

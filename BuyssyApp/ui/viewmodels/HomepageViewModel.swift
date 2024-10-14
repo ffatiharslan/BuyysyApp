@@ -14,11 +14,18 @@ class HomepageViewModel {
     var productList = BehaviorSubject<[Products]>(value: [Products]())
     
     init() {
-        fetchProducts()
-        productList = networkManager.productList
+        fetchProducts { _ in }
     }
     
-    func fetchProducts() {
-        networkManager.fetchProducts()
+    func fetchProducts(completion: @escaping (Result<[Products], Error>) -> Void) {
+        networkManager.fetchProducts { result in
+            switch result {
+            case .success(let products):
+                self.productList.onNext(products)
+                completion(.success(products))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }

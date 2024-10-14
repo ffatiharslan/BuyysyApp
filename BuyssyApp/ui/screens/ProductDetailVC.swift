@@ -8,10 +8,11 @@
 import UIKit
 
 class ProductDetailVC: UIViewController {
-
+    
     var product: Products?
     
     var viewModel = ProductDetailViewModel()
+    
     
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
@@ -22,11 +23,15 @@ class ProductDetailVC: UIViewController {
         super.viewDidLoad()
         
         if let product = product {
-            if let imageURL = URL(string: "http://kasimadalan.pe.hu/urunler/resimler/\(product.resim!)") {
-               productImageView.kf.setImage(with: imageURL)
-            }
-            productNameLabel.text = product.ad
+            setupProductDetails(product)
         }
+    }
+    
+    private func setupProductDetails(_ product: Products) {
+        if let imageURL = URL(string: "http://kasimadalan.pe.hu/urunler/resimler/\(product.resim!)") {
+            productImageView.kf.setImage(with: imageURL)
+        }
+        productNameLabel.text = product.ad
     }
     
     
@@ -36,16 +41,23 @@ class ProductDetailVC: UIViewController {
     
     
     @IBAction func addToCartButtonTapped(_ sender: UIButton) {
-        if let product = product {
-            viewModel.addToCart(ad: product.ad!,
-                                resim: product.resim!,
-                                kategori: product.kategori!,
-                                fiyat: product.fiyat!,
-                                marka: product.marka!,
-                                siparisAdeti: Int(adetStepper.value),
-                                kullaniciAdi: "FatihArslan")
+        
+        guard let product = product else { return }
+        
+        viewModel.addToCart(ad: product.ad!,
+                            resim: product.resim!,
+                            kategori: product.kategori!,
+                            fiyat: product.fiyat!,
+                            marka: product.marka!,
+                            siparisAdeti: Int(adetStepper.value),
+                            kullaniciAdi: "FatihArslan") { result in
+            switch result {
+            case .success(let message):
+                print(message)
+            case .failure(let error):
+                print("Sepete eklenemedi: \(error.localizedDescription)")
+            }
         }
     }
-    
 }
 

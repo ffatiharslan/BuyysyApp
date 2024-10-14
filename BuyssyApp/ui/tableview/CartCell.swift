@@ -28,7 +28,11 @@ class CartCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    var onRemoveButtonTapped: (() -> Void)?
+    
     @IBAction func deleteButtonTapped(_ sender: Any) {
-        cellProtocol?.deleteButtonTapped(indexPath: indexPath!)
+        //cellProtocol?.deleteButtonTapped(indexPath: indexPath!)
+        
+         onRemoveButtonTapped?()
     }
 }

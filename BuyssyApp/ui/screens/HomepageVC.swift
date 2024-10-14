@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 class HomepageVC: UIViewController {
-
+    
     @IBOutlet weak var productsCollectionView: UICollectionView!
     
     var productList = [Products]()
@@ -22,23 +22,10 @@ class HomepageVC: UIViewController {
         productsCollectionView.delegate = self
         productsCollectionView.dataSource = self
         
+        setupCollectionViewLayout()
         
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
-        
-        let ekranGenislik = UIScreen.main.bounds.width
-        let itemGenislik = (ekranGenislik - 30) / 2
-        
-        layout.itemSize = CGSize(width: itemGenislik, height: itemGenislik * 1.7)
-        
-        productsCollectionView.collectionViewLayout = layout
-        
-        
-        _ = viewModel.productList.subscribe(onNext: {list in
+        _ = viewModel.productList.subscribe(onNext: { list in
             self.productList = list
-
             DispatchQueue.main.async {
                 self.productsCollectionView.reloadData()
             }
@@ -47,23 +34,37 @@ class HomepageVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        viewModel.fetchProducts()
+        viewModel.fetchProducts { result in
+            switch result {
+            case .success(let products):
+                print("Ürünler başarıyla yüklendi.")
+            case .failure(let error):
+                print("Hata: \(error.localizedDescription)")
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toDetail" {
-            if let product = sender as? Products {
-                let destinationVC = segue.destination as! ProductDetailVC
-                destinationVC.product = product
-                
-            }
-            
+        if segue.identifier == "toDetail",
+           let product = sender as? Products,
+           let destinationVC = segue.destination as? ProductDetailVC {
+            destinationVC.product = product
         }
     }
+    
+    private func setupCollectionViewLayout() {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        
+        let ekranGenislik = UIScreen.main.bounds.width
+        let itemGenislik = (ekranGenislik - 30) / 2
+        layout.itemSize = CGSize(width: itemGenislik, height: itemGenislik * 1.7)
+        
+        productsCollectionView.collectionViewLayout = layout
+    }
 }
-
-
 
 extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -79,7 +80,6 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         cell.productNameLabel.text = product.ad
-        
         cell.layer.borderColor = UIColor.lightGray.cgColor
         cell.layer.borderWidth = 0.5
         cell.layer.cornerRadius = 10
@@ -87,11 +87,9 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource {
         return cell
     }
     
-    
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let product = productList[indexPath.row]
-        //collectionView.deselectItem(at: indexPath, animated: true)
         performSegue(withIdentifier: "toDetail", sender: product)
     }
 }
+
