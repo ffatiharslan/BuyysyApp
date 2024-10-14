@@ -11,6 +11,12 @@
 		40C3F4E42CBD3D8F00C53866 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 40C3F4E32CBD3D8F00C53866 /* FirebaseAuth */; };
 		40C3F4E62CBD3D8F00C53866 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 40C3F4E52CBD3D8F00C53866 /* FirebaseCore */; };
 		40C3F4E82CBD3D8F00C53866 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 40C3F4E72CBD3D8F00C53866 /* FirebaseFirestore */; };
+		40C3F4EB2CBD49E400C53866 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3F4EA2CBD49E400C53866 /* User.swift */; };
+		40C3F4ED2CBD4A9500C53866 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3F4EC2CBD4A9500C53866 /* LoginVC.swift */; };
+		40C3F4EF2CBD4BD200C53866 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3F4EE2CBD4BD200C53866 /* RegisterVC.swift */; };
+		40C3F4F12CBD4CB800C53866 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3F4F02CBD4CB800C53866 /* AuthenticationManager.swift */; };
+		40C3F4F32CBD4E5400C53866 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3F4F22CBD4E5400C53866 /* LoginViewModel.swift */; };
+		40C3F4F52CBD4E6500C53866 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C3F4F42CBD4E6500C53866 /* RegisterViewModel.swift */; };
 		40D152FB2CBA7C6900BD239C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D152FA2CBA7C6900BD239C /* AppDelegate.swift */; };
 		40D152FD2CBA7C6900BD239C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D152FC2CBA7C6900BD239C /* SceneDelegate.swift */; };
 		40D152FF2CBA7C6900BD239C /* HomepageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D152FE2CBA7C6900BD239C /* HomepageVC.swift */; };
@@ -38,6 +44,12 @@
 
 /* Begin PBXFileReference section */
 		40C3F4E02CBD3D3400C53866 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		40C3F4EA2CBD49E400C53866 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		40C3F4EC2CBD4A9500C53866 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		40C3F4EE2CBD4BD200C53866 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		40C3F4F02CBD4CB800C53866 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		40C3F4F22CBD4E5400C53866 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		40C3F4F42CBD4E6500C53866 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		40D152F72CBA7C6900BD239C /* BuyssyApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BuyssyApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40D152FA2CBA7C6900BD239C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		40D152FC2CBA7C6900BD239C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +91,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40C3F4E92CBD49BB00C53866 /* auth */ = {
+			isa = PBXGroup;
+			children = (
+				40C3F4EA2CBD49E400C53866 /* User.swift */,
+			);
+			path = auth;
+			sourceTree = "<group>";
+		};
 		40D152EE2CBA7C6900BD239C = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				40D153192CBA8AFC00BD239C /* NetworkManager.swift */,
+				40C3F4F02CBD4CB800C53866 /* AuthenticationManager.swift */,
 			);
 			path = managers;
 			sourceTree = "<group>";
@@ -141,6 +162,7 @@
 		40D153132CBA89E800BD239C /* entity */ = {
 			isa = PBXGroup;
 			children = (
+				40C3F4E92CBD49BB00C53866 /* auth */,
 				40D1531D2CBA926C00BD239C /* Products.swift */,
 				40D1531F2CBA928300BD239C /* ProductsResponse.swift */,
 				40D153302CBAA25000BD239C /* CRUDResponse.swift */,
@@ -156,6 +178,8 @@
 				40D152FE2CBA7C6900BD239C /* HomepageVC.swift */,
 				40D1532E2CBA9C6900BD239C /* ProductDetailVC.swift */,
 				40D153342CBAA58400BD239C /* CartVC.swift */,
+				40C3F4EC2CBD4A9500C53866 /* LoginVC.swift */,
+				40C3F4EE2CBD4BD200C53866 /* RegisterVC.swift */,
 			);
 			path = screens;
 			sourceTree = "<group>";
@@ -175,6 +199,8 @@
 				40D153172CBA8AE100BD239C /* HomepageViewModel.swift */,
 				40D153322CBAA28D00BD239C /* ProductDetailViewModel.swift */,
 				40D1533A2CBAAC9600BD239C /* CartViewModel.swift */,
+				40C3F4F22CBD4E5400C53866 /* LoginViewModel.swift */,
+				40C3F4F42CBD4E6500C53866 /* RegisterViewModel.swift */,
 			);
 			path = viewmodels;
 			sourceTree = "<group>";
@@ -273,15 +299,21 @@
 				40D1531A2CBA8AFC00BD239C /* NetworkManager.swift in Sources */,
 				40D1531E2CBA926C00BD239C /* Products.swift in Sources */,
 				40D153202CBA928300BD239C /* ProductsResponse.swift in Sources */,
+				40C3F4EB2CBD49E400C53866 /* User.swift in Sources */,
 				40D1533B2CBAAC9600BD239C /* CartViewModel.swift in Sources */,
 				40D153392CBAAC5E00BD239C /* CartProductsResponse.swift in Sources */,
+				40C3F4EF2CBD4BD200C53866 /* RegisterVC.swift in Sources */,
 				40D153332CBAA28D00BD239C /* ProductDetailViewModel.swift in Sources */,
 				40D152FB2CBA7C6900BD239C /* AppDelegate.swift in Sources */,
+				40C3F4F12CBD4CB800C53866 /* AuthenticationManager.swift in Sources */,
 				40D152FD2CBA7C6900BD239C /* SceneDelegate.swift in Sources */,
+				40C3F4F52CBD4E6500C53866 /* RegisterViewModel.swift in Sources */,
 				40D1532F2CBA9C6900BD239C /* ProductDetailVC.swift in Sources */,
+				40C3F4ED2CBD4A9500C53866 /* LoginVC.swift in Sources */,
 				40D153312CBAA25000BD239C /* CRUDResponse.swift in Sources */,
 				40D1531C2CBA8DC500BD239C /* HomepageCell.swift in Sources */,
 				40D153372CBAABCF00BD239C /* CartProducts.swift in Sources */,
+				40C3F4F32CBD4E5400C53866 /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
