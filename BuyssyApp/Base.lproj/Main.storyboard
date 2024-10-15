@@ -21,17 +21,17 @@
                                 <rect key="frame" x="0.0" y="159" width="393" height="610"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ydK-qM-eIc">
-                                    <size key="itemSize" width="219" height="217"/>
+                                    <size key="itemSize" width="219" height="311"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="HomepageCell" id="SIc-PE-6Uh" customClass="HomepageCell" customModule="BuyssyApp" customModuleProvider="target">
-                                        <rect key="frame" x="87" y="0.0" width="219" height="217"/>
+                                        <rect key="frame" x="87" y="0.0" width="219" height="311"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dC1-PB-FxB">
-                                            <rect key="frame" x="0.0" y="0.0" width="219" height="217"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="219" height="311"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pV8-sN-pes">
@@ -54,6 +54,12 @@
                                                         <action selector="addToFavoritesButtonTapped:" destination="SIc-PE-6Uh" eventType="touchUpInside" id="7S9-ab-eYC"/>
                                                     </connections>
                                                 </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0n-h2-Hz1">
+                                                    <rect key="frame" x="30" y="270" width="159" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="arO-Lg-Ucs" firstAttribute="top" secondItem="pV8-sN-pes" secondAttribute="bottom" constant="32" id="4fC-be-Hro"/>
@@ -61,15 +67,19 @@
                                                 <constraint firstAttribute="trailing" secondItem="arO-Lg-Ucs" secondAttribute="trailing" constant="12" id="Ktt-WM-JEk"/>
                                                 <constraint firstItem="arO-Lg-Ucs" firstAttribute="leading" secondItem="dC1-PB-FxB" secondAttribute="leading" constant="12" id="RG0-3C-0Ph"/>
                                                 <constraint firstItem="xB9-oE-5KF" firstAttribute="top" secondItem="arO-Lg-Ucs" secondAttribute="bottom" constant="1.6699999999999999" id="WeE-mk-VHc"/>
+                                                <constraint firstAttribute="trailing" secondItem="H0n-h2-Hz1" secondAttribute="trailing" constant="30" id="WlD-SV-49d"/>
                                                 <constraint firstAttribute="trailing" secondItem="xB9-oE-5KF" secondAttribute="trailing" constant="112" id="XmU-q9-43e"/>
+                                                <constraint firstAttribute="bottom" secondItem="H0n-h2-Hz1" secondAttribute="bottom" constant="20" id="n4W-H9-LDZ"/>
                                                 <constraint firstItem="xB9-oE-5KF" firstAttribute="leading" secondItem="dC1-PB-FxB" secondAttribute="leading" constant="56" id="prL-tz-FSQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="pV8-sN-pes" secondAttribute="trailing" id="qgK-gz-fFX"/>
                                                 <constraint firstItem="pV8-sN-pes" firstAttribute="leading" secondItem="dC1-PB-FxB" secondAttribute="leading" id="vpC-TW-4F7"/>
+                                                <constraint firstItem="H0n-h2-Hz1" firstAttribute="leading" secondItem="dC1-PB-FxB" secondAttribute="leading" constant="30" id="w3q-tb-xbz"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="219" height="217"/>
+                                        <size key="customSize" width="219" height="311"/>
                                         <connections>
                                             <outlet property="addToFavoritesButton" destination="xB9-oE-5KF" id="e5p-Yw-53q"/>
+                                            <outlet property="priceLabel" destination="H0n-h2-Hz1" id="P9L-em-cPd"/>
                                             <outlet property="productImageView" destination="pV8-sN-pes" id="U9d-X9-E2W"/>
                                             <outlet property="productNameLabel" destination="arO-Lg-Ucs" id="9bh-QV-cHa"/>
                                         </connections>
@@ -96,7 +106,20 @@
                             <constraint firstItem="4li-lD-mfg" firstAttribute="top" secondItem="eUh-rT-GDd" secondAttribute="bottom" id="mUK-Vl-gFV"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="6NM-jQ-e0M"/>
+                    <navigationItem key="navigationItem" id="6NM-jQ-e0M">
+                        <rightBarButtonItems>
+                            <barButtonItem title="AR" image="arrow.up" catalog="system" id="8qR-ES-TjR">
+                                <connections>
+                                    <action selector="artanButtonTapped:" destination="BYZ-38-t0r" id="R5s-QO-mKv"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="AZ" image="arrow.down" catalog="system" id="fdC-wY-4eX">
+                                <connections>
+                                    <action selector="azalanButtonTapped:" destination="BYZ-38-t0r" id="JaI-TU-a0T"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <connections>
                         <outlet property="productsCollectionView" destination="4li-lD-mfg" id="UgO-CO-ee1"/>
                         <outlet property="searchBar" destination="eUh-rT-GDd" id="Zmg-cK-9de"/>
@@ -599,6 +622,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.down" catalog="system" width="118" height="128"/>
+        <image name="arrow.up" catalog="system" width="118" height="128"/>
         <image name="cart" catalog="system" width="128" height="102"/>
         <image name="cart.fill" catalog="system" width="128" height="102"/>
         <image name="heart" catalog="system" width="128" height="107"/>

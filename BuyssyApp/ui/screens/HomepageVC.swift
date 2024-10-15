@@ -69,6 +69,24 @@ class HomepageVC: UIViewController {
         
         productsCollectionView.collectionViewLayout = layout
     }
+    
+    
+    @IBAction func artanButtonTapped(_ sender: Any) {
+        viewModel.sortProductsDescending { [weak self] sortedProducts in
+                   self?.productList = sortedProducts
+                   self?.productsCollectionView.reloadData()
+               }
+    }
+    
+    @IBAction func azalanButtonTapped(_ sender: Any) {
+        
+        
+        viewModel.sortProductsAscending { [weak self] sortedProducts in
+                    self?.productList = sortedProducts
+                    self?.productsCollectionView.reloadData()
+                }
+    }
+    
 }
 
 
@@ -96,7 +114,9 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, Home
             cell.productImageView.kf.setImage(with: imageURL)
         }
         
+        cell.priceLabel.text = "\(product.fiyat!)"
         cell.productNameLabel.text = product.ad
+        
         cell.layer.borderColor = UIColor.lightGray.cgColor
         cell.layer.borderWidth = 0.5
         cell.layer.cornerRadius = 10

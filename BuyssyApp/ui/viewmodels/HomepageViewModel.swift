@@ -61,4 +61,28 @@ class HomepageViewModel {
                })
                .disposed(by: disposeBag)
        }
+    
+    
+    
+    
+    
+    // Ürünleri düşükten yükseğe sıralama
+        func sortProductsAscending(completion: @escaping ([Products]) -> Void) {
+            productList
+                .map { $0.sorted { ($0.fiyat ?? 0) < ($1.fiyat ?? 0) } } // Fiyata göre sıralama
+                .subscribe(onNext: { sortedProducts in
+                    completion(sortedProducts) // Sıralanmış ürünleri döndür
+                })
+                .disposed(by: disposeBag)
+        }
+
+        // Ürünleri yüksekten düşüğe sıralama
+        func sortProductsDescending(completion: @escaping ([Products]) -> Void) {
+            productList
+                .map { $0.sorted { ($0.fiyat ?? 0) > ($1.fiyat ?? 0) } } // Fiyata göre ters sıralama
+                .subscribe(onNext: { sortedProducts in
+                    completion(sortedProducts) // Sıralanmış ürünleri döndür
+                })
+                .disposed(by: disposeBag)
+        }
 }

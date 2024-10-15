@@ -19,7 +19,7 @@ class HomepageCell: UICollectionViewCell {
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var addToFavoritesButton: UIButton!
-    
+    @IBOutlet weak var priceLabel: UILabel!
     
     @IBAction func addToFavoritesButtonTapped(_ sender: Any) {
         addToFavoritesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
