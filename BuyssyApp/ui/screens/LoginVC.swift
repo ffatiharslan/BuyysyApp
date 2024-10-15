@@ -23,17 +23,14 @@ class LoginVC: UIViewController {
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
-        viewModel.login(email: email, password: password) { result in
-            switch result {
-            case .success:
-                print("Giriş başarılı, ana ekrana yönlendiriliyor...")
-                self.navigateToMainScreen()
-            case .failure(let error):
-                print("Giriş hatası: \(error.localizedDescription)")
-                // Hata mesajı gösterin
-                self.showAlert(message: "Giriş hatası: \(error.localizedDescription)")
-            }
-        }
+        viewModel.signInWithEmail(email: email, password: password) { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.navigateToMainScreen()
+                    case .failure(let error):
+                        self?.showAlert(message: "Giriş hatası: \(error.localizedDescription)")
+                    }
+                }
     }
     
     @IBAction func signInWithGoogleButtonTapped(_ sender: Any) {

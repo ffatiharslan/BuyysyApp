@@ -10,9 +10,12 @@ import Kingfisher
 
 class HomepageVC: UIViewController {
     
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var productsCollectionView: UICollectionView!
     
     var productList = [Products]()
+    
+    var filteredProductList = [Products]() // Filtrelenmiş ürünlerin listesi
     
     var viewModel = HomepageViewModel()
     
@@ -21,6 +24,8 @@ class HomepageVC: UIViewController {
         
         productsCollectionView.delegate = self
         productsCollectionView.dataSource = self
+        
+        searchBar.delegate = self
         
         setupCollectionViewLayout()
         
@@ -66,7 +71,19 @@ class HomepageVC: UIViewController {
     }
 }
 
-extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource {
+
+extension HomepageVC: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // Arama sorgusunu ViewModel'e gönder ve sonuçları al
+        viewModel.search(query: searchText) { [weak self] filteredProducts in
+            self?.productList = filteredProducts
+            self?.productsCollectionView.reloadData() // Sonuçları güncelle
+        }
+    }
+}
+
+
+extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, HomepageCellProtocol {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return productList.count
     }
@@ -84,12 +101,31 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.layer.borderWidth = 0.5
         cell.layer.cornerRadius = 10
         
+        cell.homepageCellProtocol = self
+        cell.indexPath = indexPath
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let product = productList[indexPath.row]
+        print(product.ad!, product.resim!, product.fiyat!, product.kategori!, product.marka!, product.id!)
         performSegue(withIdentifier: "toDetail", sender: product)
+    }
+    
+    
+    func addToFavorites(indexpath: IndexPath) {
+        let product = productList[indexpath.row]
+        viewModel.addToFavorites(product: product) { result in
+            switch result {
+            case .success:
+                print("Ürün favorilere eklendi.")
+                
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 

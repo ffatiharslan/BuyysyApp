@@ -13,25 +13,14 @@ class LoginViewModel {
     
     private let authService = AuthenticationManager()
     
-    // Kullanıcı email ve şifreyle giriş yapıyor
-    func login(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        authService.login(email: email, password: password) { result in
-            switch result {
-            case .success:
-                print("Giriş başarılı.")
-                completion(.success(()))
-            case .failure(let error):
-                print("Giriş hatası: \(error.localizedDescription)")
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    
-    // Google Sign-In işlemini başlatır
-        func signInWithGoogle(presentingVC: UIViewController, completion: @escaping (Result<Void, Error>) -> Void) {
+    func signInWithGoogle(presentingVC: UIViewController, completion: @escaping (Result<Void, Error>) -> Void) {
             authService.signInWithGoogle(presentingVC: presentingVC, completion: completion)
         }
+
+        func signInWithEmail(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+            authService.signInWithEmail(email: email, password: password, completion: completion)
+        }
+
     
     
     // Oturum açık mı kontrol et
