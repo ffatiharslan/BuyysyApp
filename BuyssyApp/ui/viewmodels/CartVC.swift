@@ -73,9 +73,9 @@ extension CartVC: UITableViewDelegate, UITableViewDataSource, CellProtocol {
         }
         
         cell.brandLabel.text = "\(cartProduct.marka!) \(cartProduct.ad!)"
-        cell.priceLabel.text = "\(cartProduct.fiyat!)"
+        cell.priceLabel.text = "\(cartProduct.fiyat!) ₺"
         cell.adetLabel.text = "\(cartProduct.siparisAdeti!)"
-        cell.totalPriceLabel.text = "\(cartProduct.fiyat! * cartProduct.siparisAdeti!)"
+        cell.totalPriceLabel.text = "\(cartProduct.fiyat! * cartProduct.siparisAdeti!) ₺"
         cell.cellProtocol = self
         cell.indexPath = indexPath
         

@@ -82,7 +82,7 @@ extension FavoritesVC: UITableViewDelegate, UITableViewDataSource, FavoritesCell
             cell.productImageView.kf.setImage(with: imageURL)
         }
         cell.brandNameLabel.text = "\(product.marka!) \(product.ad!)"
-        cell.priceLabel.text = "\(product.fiyat!)"
+        cell.priceLabel.text = "\(product.fiyat!) ₺"
         
         cell.favoritesCellProtocol = self
         cell.indexPath = indexPath

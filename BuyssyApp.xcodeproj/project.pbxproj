@@ -213,7 +213,6 @@
 			children = (
 				40D152FE2CBA7C6900BD239C /* HomepageVC.swift */,
 				40D1532E2CBA9C6900BD239C /* ProductDetailVC.swift */,
-				40D153342CBAA58400BD239C /* CartVC.swift */,
 				40C3F4EC2CBD4A9500C53866 /* LoginVC.swift */,
 				40C3F4EE2CBD4BD200C53866 /* RegisterVC.swift */,
 				40C3F4FD2CBDD89C00C53866 /* AccountVC.swift */,
@@ -245,6 +244,7 @@
 				40C3F4F22CBD4E5400C53866 /* LoginViewModel.swift */,
 				40C3F4F42CBD4E6500C53866 /* RegisterViewModel.swift */,
 				40C3F4FF2CBDDA2900C53866 /* AccountViewModel.swift */,
+				40D153342CBAA58400BD239C /* CartVC.swift */,
 				40691F742CBE89D8001DCA0E /* FavoritesViewModel.swift */,
 			);
 			path = viewmodels;
