@@ -46,12 +46,12 @@ class FavoritesVC: UIViewController {
     
     
     private func fetchFavoriteProducts() {
-        viewModel.fetchFavorites { [weak self] result in
+        viewModel.fetchFavorites { result in
             switch result {
             case .success(_):
-                self?.favoritesTableView.reloadData()
+                self.favoritesTableView.reloadData()
             case .failure(let error):
-                self?.showErrorAlert(message: error.localizedDescription)
+                self.showErrorAlert(message: error.localizedDescription)
             }
         }
     }

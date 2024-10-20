@@ -48,23 +48,23 @@ class LoginVC: UIViewController {
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
-        viewModel.signInWithEmail(email: email, password: password) { [weak self] result in
+        viewModel.signInWithEmail(email: email, password: password) { result in
             switch result {
             case .success:
-                self?.navigateToMainScreen()
+                self.navigateToMainScreen()
             case .failure(let error):
-                self?.showAlert(message: "Giriş hatası: \(error.localizedDescription)")
+                self.showAlert(message: "Giriş hatası: \(error.localizedDescription)")
             }
         }
     }
     
     @IBAction func signInWithGoogleButtonTapped(_ sender: Any) {
-        viewModel.signInWithGoogle(presentingVC: self) { [weak self] result in
+        viewModel.signInWithGoogle(presentingVC: self) { result in
             switch result {
             case .success:
-                self?.navigateToMainScreen()
+                self.navigateToMainScreen()
             case .failure(let error):
-                self?.showAlert(message: "Giriş hatası: \(error.localizedDescription)")
+                self.showAlert(message: "Giriş hatası: \(error.localizedDescription)")
             }
         }
     }

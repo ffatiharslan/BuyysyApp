@@ -16,7 +16,7 @@ class CategoriesVC: UIViewController {
     
     private let viewModel = HomepageViewModel()
     private let disposeBag = DisposeBag()
-    private var categories = [String]() // Kategoriler listesi
+    private var categories = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,11 +26,11 @@ class CategoriesVC: UIViewController {
         
         setupCollectionView()
         
-        viewModel.fetchProducts { [weak self] result in
+        viewModel.fetchProducts { result in
             switch result {
             case .success(let products):
-                self?.categories = Array(Set(products.compactMap { $0.kategori })) // Kategorileri türet
-                self?.categoriesCollectionView.reloadData()
+                self.categories = Array(Set(products.compactMap { $0.kategori }))
+                self.categoriesCollectionView.reloadData()
             case .failure(let error):
                 print("Hata: \(error.localizedDescription)")
             }
@@ -43,7 +43,7 @@ class CategoriesVC: UIViewController {
         
         let layout = UICollectionViewFlowLayout()
         let spacing: CGFloat = 10
-        let itemWidth = (view.frame.width - 3 * spacing) / 2 // 2 sütunlu layout
+        let itemWidth = (view.frame.width - 3 * spacing) / 2 
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         layout.itemSize = CGSize(width: itemWidth, height: itemWidth * 1.2)
         layout.minimumInteritemSpacing = spacing

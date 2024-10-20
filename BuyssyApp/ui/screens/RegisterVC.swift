@@ -36,7 +36,6 @@ class RegisterVC: UIViewController {
             switch result {
             case .success:
                 self.showAlert(message: "Kayıt başarılı!", completion: {
-                    // Giriş ekranına yönlendirme veya ana sayfaya geçiş
                     self.dismiss(animated: true, completion: nil)
                 })
             case .failure(let error):

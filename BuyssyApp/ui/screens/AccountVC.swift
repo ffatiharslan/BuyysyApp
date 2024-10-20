@@ -19,12 +19,12 @@ class AccountVC: UIViewController {
 
     @IBAction func signOutButtonTapped(_ sender: Any) {
         
-        viewModel.signOut { [weak self] result in
+        viewModel.signOut { result in
             switch result {
             case .success:
-                self?.navigateToLoginScreen()
+                self.navigateToLoginScreen()
             case .failure(let error):
-                self?.showAlert(message: "Çıkış işlemi sırasında hata oluştu: \(error.localizedDescription)")
+                self.showAlert(message: "Çıkış işlemi sırasında hata oluştu: \(error.localizedDescription)")
             }
         }
     }

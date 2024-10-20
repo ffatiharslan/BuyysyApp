@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 class ProductDetailVC: UIViewController {
     
@@ -25,6 +26,7 @@ class ProductDetailVC: UIViewController {
     @IBOutlet weak var stepperStackView: UIStackView!
     @IBOutlet weak var priceLabel: UILabel!
     
+    var animationView: LottieAnimationView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +59,7 @@ class ProductDetailVC: UIViewController {
         }
     }
     
-   
+    
     @IBAction func incrementButtonTapped(_ sender: Any) {
         if stepperValue < 10 {
             stepperValue += 1
@@ -79,10 +81,31 @@ class ProductDetailVC: UIViewController {
             switch result {
             case .success(let message):
                 print(message)
+                self.playSuccessAnimation()
             case .failure(let error):
                 print("Sepete eklenemedi: \(error.localizedDescription)")
             }
         }
     }
+    
+    private func playSuccessAnimation() {
+        animationView = .init(name: "cart10") // success.json dosyanızı kullanın
+        
+        guard let animationView = animationView else { return }
+        
+        animationView.frame = view.bounds
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .playOnce
+        animationView.animationSpeed = 1.0
+        
+        view.addSubview(animationView)
+        
+        animationView.play { finished in
+            if finished {
+                animationView.removeFromSuperview() // Animasyon bitince kaldır
+            }
+        }
+    }
+
 }
 
