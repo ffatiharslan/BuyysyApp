@@ -24,9 +24,6 @@ class LoginVC: UIViewController {
         
         self.navigationItem.title = "Buyysy"
         
-        containerView.layer.borderColor = UIColor(.gray).cgColor
-        containerView.backgroundColor = .systemGray6
-        
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [.font: UIFont(name: "ADLaMDisplay-Regular", size: 22)!]
         
@@ -34,6 +31,8 @@ class LoginVC: UIViewController {
         navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
+        containerView.layer.borderColor = UIColor(.gray).cgColor
+        containerView.backgroundColor = .systemGray6
     }
     
     @IBAction func showPasswordButtonTapped(_ sender: Any) {
@@ -60,7 +59,6 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func signInWithGoogleButtonTapped(_ sender: Any) {
-        // Google Sign-In işlemini başlatıyoruz
         viewModel.signInWithGoogle(presentingVC: self) { [weak self] result in
             switch result {
             case .success:
@@ -74,10 +72,13 @@ class LoginVC: UIViewController {
     private func navigateToMainScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainTabBarController = storyboard.instantiateViewController(identifier: "MainTabBarController")
-        
-        guard let window = UIApplication.shared.windows.first else { return }
-        window.rootViewController = mainTabBarController
-        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
+       
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let window = windowScene.windows.first {
+                window.rootViewController = mainTabBarController
+                UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
+            }
+        }
     }
     
     private func showAlert(message: String) {

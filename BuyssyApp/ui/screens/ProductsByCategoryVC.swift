@@ -12,10 +12,10 @@ class ProductsByCategoryVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var selectedCategory: String? // Seçilen kategori
+    var selectedCategory: String?
     private let viewModel = HomepageViewModel()
     private let disposeBag = DisposeBag()
-    private var products = [Products]() // Ürünler listesi
+    private var products = [Products]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class ProductsByCategoryVC: UIViewController {
         fetchProductsByCategory()
     }
     
-    // Seçilen kategoriye göre ürünleri getir
+
     private func fetchProductsByCategory() {
         guard let category = selectedCategory else { return }
         viewModel.filterProducts(by: category) { [weak self] filteredProducts in

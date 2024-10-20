@@ -24,6 +24,14 @@ class HomepageVC: UIViewController {
         
         view.backgroundColor = .systemGray6
         
+        self.navigationItem.title = "Buyysy"
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.font: UIFont(name: "ADLaMDisplay-Regular", size: 22)!]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
         productsCollectionView.delegate = self
         productsCollectionView.dataSource = self
         

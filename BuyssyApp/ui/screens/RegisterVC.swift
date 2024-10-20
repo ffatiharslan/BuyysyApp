@@ -24,7 +24,6 @@ class RegisterVC: UIViewController {
     }
     
     @IBAction func registerButtonTapped(_ sender: Any) {
-        // Kullanıcıdan bilgileri alıyoruz.
         guard let email = emailTextField.text, !email.isEmpty,
               let password = passwordTextField.text, !password.isEmpty,
               let confirmPassword = confirmPasswordTextField.text, !confirmPassword.isEmpty else {
@@ -32,7 +31,7 @@ class RegisterVC: UIViewController {
             return
         }
         
-        // Kayıt işlemini başlatıyoruz.
+
         viewModel.register(email: email, password: password, confirmPassword: confirmPassword) { result in
             switch result {
             case .success:
@@ -46,7 +45,7 @@ class RegisterVC: UIViewController {
         }
     }
     
-    // Hata ve başarı mesajlarını göstermek için basit bir alert fonksiyonu
+
     private func showAlert(message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Tamam", style: .default) { _ in

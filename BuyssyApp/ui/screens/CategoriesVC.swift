@@ -26,7 +26,6 @@ class CategoriesVC: UIViewController {
         
         setupCollectionView()
         
-        // Ürünleri çek ve kategorileri türet
         viewModel.fetchProducts { [weak self] result in
             switch result {
             case .success(let products):
@@ -42,7 +41,6 @@ class CategoriesVC: UIViewController {
         categoriesCollectionView.delegate = self
         categoriesCollectionView.dataSource = self
         
-        // Hücrelerin layout ayarlarını yapalım
         let layout = UICollectionViewFlowLayout()
         let spacing: CGFloat = 10
         let itemWidth = (view.frame.width - 3 * spacing) / 2 // 2 sütunlu layout
@@ -63,7 +61,6 @@ extension CategoriesVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
         let category = categories[indexPath.row]
         
-        // Hücrede kategori adını ve fotoğrafı göster
         cell.categoryNameLabel.text = category
         
         switch category {

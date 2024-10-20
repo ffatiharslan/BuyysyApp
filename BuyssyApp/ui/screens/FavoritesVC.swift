@@ -44,7 +44,7 @@ class FavoritesVC: UIViewController {
         }
     }
     
-    // Favori ürünleri getir
+    
     private func fetchFavoriteProducts() {
         viewModel.fetchFavorites { [weak self] result in
             switch result {
@@ -56,7 +56,7 @@ class FavoritesVC: UIViewController {
         }
     }
     
-    // Hata mesajı göstermek için alert
+    
     private func showErrorAlert(message: String) {
         let alert = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Tamam", style: .default, handler: nil))
