@@ -13,11 +13,18 @@ class ProductDetailVC: UIViewController {
     
     var viewModel = ProductDetailViewModel()
     
+    var stepperValue: Int = 1 {
+        didSet {
+            adetLabel.text = "\(stepperValue)"
+        }
+    }
     
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var adetLabel: UILabel!
-    @IBOutlet weak var adetStepper: UIStepper!
+    @IBOutlet weak var stepperStackView: UIStackView!
+    @IBOutlet weak var priceLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,18 +32,36 @@ class ProductDetailVC: UIViewController {
         if let product = product {
             setupProductDetails(product)
         }
+        
+        stepperStackView.layer.borderWidth = 0.2
+        stepperStackView.layer.borderColor = UIColor.systemGray5.cgColor
+        stepperStackView.layer.cornerRadius = 10
+        
+        adetLabel.layer.masksToBounds = true
+        adetLabel.layer.cornerRadius = 10
+        
     }
     
     private func setupProductDetails(_ product: Products) {
         if let imageURL = URL(string: "http://kasimadalan.pe.hu/urunler/resimler/\(product.resim!)") {
             productImageView.kf.setImage(with: imageURL)
         }
-        productNameLabel.text = product.ad
+        productNameLabel.text = "\(product.marka!) \(product.ad!)"
+        priceLabel.text = "\(product.fiyat!) ₺"
     }
     
     
-    @IBAction func adetStepper(_ sender: UIStepper) {
-        adetLabel.text = "\(Int(sender.value))"
+    @IBAction func decrementButtonTapped(_ sender: UIButton) {
+        if stepperValue > 1 {
+            stepperValue -= 1
+        }
+    }
+    
+   
+    @IBAction func incrementButtonTapped(_ sender: Any) {
+        if stepperValue < 10 {
+            stepperValue += 1
+        }
     }
     
     
@@ -49,7 +74,7 @@ class ProductDetailVC: UIViewController {
                             kategori: product.kategori!,
                             fiyat: product.fiyat!,
                             marka: product.marka!,
-                            siparisAdeti: Int(adetStepper.value),
+                            siparisAdeti: stepperValue,
                             kullaniciAdi: "FatihArslan") { result in
             switch result {
             case .success(let message):

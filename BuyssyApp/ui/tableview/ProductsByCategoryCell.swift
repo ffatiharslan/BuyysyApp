@@ -7,10 +7,10 @@
 
 import UIKit
 
-class CategoryProductCell: UICollectionViewCell {
+class ProductsByCategoryCell: UICollectionViewCell {
     
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var productImageView: UIImageView!
+    @IBOutlet weak var productNameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     
 }

@@ -11,26 +11,52 @@ class LoginVC: UIViewController {
     
     private let viewModel = LoginViewModel()
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
+    @IBOutlet weak var googleButton: UIButton!
+    @IBOutlet weak var showPasswordButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .systemGray6
+        
+        self.navigationItem.title = "Buyysy"
+        
+        containerView.layer.borderColor = UIColor(.gray).cgColor
+        containerView.backgroundColor = .systemGray6
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.font: UIFont(name: "ADLaMDisplay-Regular", size: 22)!]
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
     }
+    
+    @IBAction func showPasswordButtonTapped(_ sender: Any) {
+        passwordTextField.isSecureTextEntry.toggle()
+        
+        if passwordTextField.isSecureTextEntry {
+            showPasswordButton.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+        } else {
+            showPasswordButton.setImage(UIImage(systemName: "eye.fill"), for: .normal)
+        }
+    }
+    
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         guard let email = emailTextField.text, let password = passwordTextField.text else { return }
         viewModel.signInWithEmail(email: email, password: password) { [weak self] result in
-                    switch result {
-                    case .success:
-                        self?.navigateToMainScreen()
-                    case .failure(let error):
-                        self?.showAlert(message: "Giriş hatası: \(error.localizedDescription)")
-                    }
-                }
+            switch result {
+            case .success:
+                self?.navigateToMainScreen()
+            case .failure(let error):
+                self?.showAlert(message: "Giriş hatası: \(error.localizedDescription)")
+            }
+        }
     }
     
     @IBAction func signInWithGoogleButtonTapped(_ sender: Any) {

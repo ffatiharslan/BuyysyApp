@@ -32,6 +32,7 @@ class NetworkManager {
         }
     }
     
+    
     func addToCart(ad: String,
                    resim: String,
                    kategori: String,
@@ -59,6 +60,7 @@ class NetworkManager {
         }
     }
     
+    
     func fetchCartProducts(kullaniciAdi: String, completion: @escaping (Result<[CartProducts], Error>) -> Void) {
         let url = "http://kasimadalan.pe.hu/urunler/sepettekiUrunleriGetir.php"
         let parameters: Parameters = ["kullaniciAdi": kullaniciAdi]
@@ -78,6 +80,7 @@ class NetworkManager {
         }
     }
     
+    
     func deleteFromCart(sepetId: Int, kullaniciAdi: String,
                         completion: @escaping (Result<String, Error>) -> Void) {
         let url = "http://kasimadalan.pe.hu/urunler/sepettenUrunSil.php"
@@ -88,7 +91,8 @@ class NetworkManager {
                 do {
                     let decodedResponse = try JSONDecoder().decode(CRUDResponse.self, from: data)
                     completion(.success(decodedResponse.message ?? "Silme işlemi başarılı"))
-                } catch {
+                }
+                catch {
                     completion(.failure(error))
                 }
             }

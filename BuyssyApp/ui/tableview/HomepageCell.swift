@@ -21,8 +21,10 @@ class HomepageCell: UICollectionViewCell {
     @IBOutlet weak var addToFavoritesButton: UIButton!
     @IBOutlet weak var priceLabel: UILabel!
     
+    
+    
     @IBAction func addToFavoritesButtonTapped(_ sender: Any) {
-        addToFavoritesButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        homepageCellProtocol?.addToFavorites(indexpath: indexPath!)
+        guard let indexPath = indexPath else { return }
+        homepageCellProtocol?.addToFavorites(indexpath: indexPath) 
     }
 }

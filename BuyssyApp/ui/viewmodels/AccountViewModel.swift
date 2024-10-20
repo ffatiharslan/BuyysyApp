@@ -6,12 +6,27 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 class AccountViewModel {
     private let authManager = AuthenticationManager()
+    let options = ["Favorilerim", "Sepetimdeki Ürünler", "Teslimat Adreslerim"]
+    var userEmail: String = ""
     
-    // Çıkış işlemini başlatır
-        func signOut(completion: @escaping (Result<Void, Error>) -> Void) {
-            authManager.signOut(completion: completion)
+    init() {
+        fetchUserEmail()
+    }
+    
+    
+    func signOut(completion: @escaping (Result<Void, Error>) -> Void) {
+        authManager.signOut(completion: completion)
+    }
+    
+    func fetchUserEmail() {
+        if let currentUser = Auth.auth().currentUser {
+            userEmail = currentUser.email ?? "Email bulunamadı"
+        } else {
+            userEmail = "Kullanıcı bulunamadı"
         }
+    }
 }

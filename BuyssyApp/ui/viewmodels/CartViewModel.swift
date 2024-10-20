@@ -34,7 +34,6 @@ class CartViewModel {
         networkManager.deleteFromCart(sepetId: sepetId, kullaniciAdi: kullaniciAdi) { [self] result in
             switch result {
             case .success(let message):
-                // Sepet ürünlerini tekrar getir.
                 self.fetchCartProducts { _ in }
                 
                 var currentList = try! cartProductList.value()

@@ -17,6 +17,7 @@ class CartVC: UIViewController {
     
     var cartProductList = [CartProducts]()
     var viewModel = CartViewModel()
+    var cartViewModel = ProductDetailViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,8 +72,10 @@ extension CartVC: UITableViewDelegate, UITableViewDataSource, CellProtocol {
             cell.productImageView.kf.setImage(with: imageURL)
         }
         
-        cell.brandLabel.text = cartProduct.ad
+        cell.brandLabel.text = "\(cartProduct.marka!) \(cartProduct.ad!)"
+        cell.priceLabel.text = "\(cartProduct.fiyat!)"
         cell.adetLabel.text = "\(cartProduct.siparisAdeti!)"
+        cell.totalPriceLabel.text = "\(cartProduct.fiyat! * cartProduct.siparisAdeti!)"
         cell.cellProtocol = self
         cell.indexPath = indexPath
         
@@ -96,12 +99,62 @@ extension CartVC: UITableViewDelegate, UITableViewDataSource, CellProtocol {
             }
         }
         
+        cell.stepperStackView.layer.borderWidth = 0.2
+        cell.stepperStackView.layer.borderColor = UIColor.black.cgColor
+        cell.stepperStackView.layer.cornerRadius = 10
+        
+        cell.adetLabel.layer.masksToBounds = true
+        cell.adetLabel.layer.cornerRadius = 10
         
         return cell
     }
     
     func deleteButtonTapped(indexPath: IndexPath) {
         // İlgili işlemleri burada gerçekleştirebilirsiniz.
+    }
+    
+    
+    func decrementCartProduct(indexPath: IndexPath) {
+        let product = cartProductList[indexPath.row]
+        if product.siparisAdeti! > 1 {
+            cartViewModel.addToCart(ad: product.ad!, resim: product.resim!, kategori: product.kategori!, fiyat: product.fiyat!, marka: product.marka!, siparisAdeti: -1, kullaniciAdi: "FatihArslan") { result in
+                switch result {
+                case .success(_):
+                    self.viewModel.fetchCartProducts { result in
+                        switch result {
+                        case .success(_):
+                            print("Sepette ürün artırıldı")
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+    }
+    
+    func incrementCartProduct(indexPath: IndexPath) {
+        let product = cartProductList[indexPath.row]
+        if product.siparisAdeti! < 10 {
+            cartViewModel.addToCart(ad: product.ad!, resim: product.resim!, kategori: product.kategori!, fiyat: product.fiyat!, marka: product.marka!, siparisAdeti: 1, kullaniciAdi: "FatihArslan") { result in
+                switch result {
+                case .success(_):
+                    self.viewModel.fetchCartProducts { result in
+                        switch result {
+                        case .success(_):
+                            print("Sepette ürün artırıldı")
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
 }
 

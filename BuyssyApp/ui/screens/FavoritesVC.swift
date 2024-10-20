@@ -36,9 +36,8 @@ class FavoritesVC: UIViewController {
         super.viewWillAppear(animated)
         viewModel.fetchFavorites { result in
             switch result {
-            case .success(let products):
+            case .success(_):
                 print("Favori ürünler başarıyla yüklendi")
-                
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -69,7 +68,7 @@ class FavoritesVC: UIViewController {
 
 
 
-extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
+extension FavoritesVC: UITableViewDelegate, UITableViewDataSource, FavoritesCellProtocol {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return favoriteProductList.count
     }
@@ -78,22 +77,45 @@ extension FavoritesVC: UITableViewDelegate, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavoritesCell", for: indexPath) as! FavoritesCell
         let product = favoriteProductList[indexPath.row]
-        cell.nameLabel.text = product.ad
-        cell.brandLabel.text = product.marka
-        cell.categoryLabel.text = product.kategori
+        
+        if let imageURL = URL(string: "http://kasimadalan.pe.hu/urunler/resimler/\(product.resim!)") {
+            cell.productImageView.kf.setImage(with: imageURL)
+        }
+        cell.brandNameLabel.text = "\(product.marka!) \(product.ad!)"
         cell.priceLabel.text = "\(product.fiyat!)"
-        cell.productImageView.image = UIImage(systemName: "person")
+        
+        cell.favoritesCellProtocol = self
+        cell.indexPath = indexPath
         return cell
     }
     
     
-    // Ürün favorilerden çıkarma
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func deleteFromFavorites(indexPath: IndexPath) {
         let product = favoriteProductList[indexPath.row]
         viewModel.removeProductFromFavorites(productID: product.id!) { result in
             switch result {
             case .success():
                 print("Ürün favorilerden başarıyla silindi.")
+                self.viewModel.fetchFavorites { result in
+                    switch result {
+                    case .success(_):
+                        print("Favoriler başarıyla güncellendi.")
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func addToCart(indexPath: IndexPath) {
+        let product = favoriteProductList[indexPath.row]
+        viewModel.addToCart(ad: product.ad!, resim: product.resim!, kategori: product.kategori!, fiyat: product.fiyat!, marka: product.marka!, siparisAdeti: 1, kullaniciAdi: "FatihArslan") { result in
+            switch result {
+            case .success(let message):
+                print(message)
             case .failure(let error):
                 print(error.localizedDescription)
             }

@@ -12,8 +12,10 @@ class HomepageViewModel {
     
     var networkManager = NetworkManager()
     var firestoreManager = FirestoreManager()
+    
     var productList = BehaviorSubject<[Products]>(value: [Products]())
-    var filteredProductList = BehaviorSubject<[Products]>(value: []) // Filtrelenmiş ürünlerin listesi
+    var filteredProductList = BehaviorSubject<[Products]>(value: [])
+    
     private let disposeBag = DisposeBag()
     
     
@@ -33,7 +35,7 @@ class HomepageViewModel {
         }
     }
     
-    // Favorilere ürün ekle
+    
     func addToFavorites(product: Products, completion: @escaping (Result<Void, Error>) -> Void) {
         firestoreManager.addProductToFavorites(product: product) { result in
             completion(result)
@@ -42,62 +44,56 @@ class HomepageViewModel {
     }
     
     
+    func removeProductFromFavorites(productID: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+        firestoreManager.removeProductFromFavorites(productID: productID, completion: completion)
+    }
+    
+    func isProductFavorited(productID: Int, completion: @escaping (Bool) -> Void) {
+        firestoreManager.isProductFavorited(productID: productID, completion: completion)
+    }
     
     
-    
-    
-    // Arama sorgusuna göre manuel filtreleme yap
     func search(query: String, completion: @escaping ([Products]) -> Void) {
-        productList
-            .subscribe(onNext: { products in
+        productList.subscribe(onNext: { products in
                 if query.isEmpty {
-                    completion(products) // Sorgu boşsa tüm ürünleri döndür
+                    completion(products)
                 } else {
                     let filteredProducts = products.filter {
                         $0.ad?.lowercased().contains(query.lowercased()) ?? false
                     }
-                    completion(filteredProducts) // Filtrelenmiş ürünleri döndür
+                    completion(filteredProducts)
                 }
             })
             .disposed(by: disposeBag)
     }
     
-    
-    
-    
-    
-    // Ürünleri düşükten yükseğe sıralama
+
     func sortProductsAscending(completion: @escaping ([Products]) -> Void) {
         productList
-            .map { $0.sorted { ($0.fiyat ?? 0) < ($1.fiyat ?? 0) } } // Fiyata göre sıralama
+            .map { $0.sorted { ($0.fiyat ?? 0) < ($1.fiyat ?? 0) } }
             .subscribe(onNext: { sortedProducts in
-                completion(sortedProducts) // Sıralanmış ürünleri döndür
+                completion(sortedProducts)
             })
             .disposed(by: disposeBag)
     }
     
-    // Ürünleri yüksekten düşüğe sıralama
+    
     func sortProductsDescending(completion: @escaping ([Products]) -> Void) {
         productList
-            .map { $0.sorted { ($0.fiyat ?? 0) > ($1.fiyat ?? 0) } } // Fiyata göre ters sıralama
+            .map { $0.sorted { ($0.fiyat ?? 0) > ($1.fiyat ?? 0) } }
             .subscribe(onNext: { sortedProducts in
-                completion(sortedProducts) // Sıralanmış ürünleri döndür
+                completion(sortedProducts)
             })
             .disposed(by: disposeBag)
     }
     
     
     
-    
-    
-    
-    
-    // Belirli bir kategoriye göre ürünleri filtrele
     func filterProducts(by category: String, completion: @escaping ([Products]) -> Void) {
         productList
             .subscribe(onNext: { products in
                 let filteredProducts = products.filter { $0.kategori == category }
-                completion(filteredProducts) // Filtrelenmiş ürünleri döndür
+                completion(filteredProducts) 
             })
             .disposed(by: disposeBag)
     }

@@ -7,11 +7,11 @@
 
 import Foundation
 import RxSwift
+import Alamofire
 
 class FavoritesViewModel {
-
-    private let firestoreManager = FirestoreManager()
     
+    private let firestoreManager = FirestoreManager()
 
     var favoriteProductList = BehaviorSubject<[Products]>(value: [Products]())
     
@@ -42,6 +42,33 @@ class FavoritesViewModel {
                 print("Favori ürünler yüklendi")
             case .failure(let error):
                 print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func addToCart(ad: String,
+                   resim: String,
+                   kategori: String,
+                   fiyat: Int,
+                   marka: String,
+                   siparisAdeti: Int,
+                   kullaniciAdi: String,
+                   completion: @escaping (Result<String, Error>) -> Void) {
+        
+        let url = "http://kasimadalan.pe.hu/urunler/sepeteUrunEkle.php"
+        let parameters: Parameters = [
+            "ad": ad, "resim": resim, "kategori": kategori, "fiyat": fiyat,
+            "marka": marka, "siparisAdeti": siparisAdeti, "kullaniciAdi": kullaniciAdi
+        ]
+        
+        AF.request(url, method: .post, parameters: parameters).response { response in
+            if let data = response.data {
+                do {
+                    let decodedResponse = try JSONDecoder().decode(CRUDResponse.self, from: data)
+                    completion(.success(decodedResponse.message ?? "Başarılı"))
+                } catch {
+                    completion(.failure(error))
+                }
             }
         }
     }

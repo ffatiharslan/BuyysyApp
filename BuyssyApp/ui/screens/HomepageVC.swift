@@ -15,12 +15,14 @@ class HomepageVC: UIViewController {
     
     var productList = [Products]()
     
-    var filteredProductList = [Products]() // Filtrelenmiş ürünlerin listesi
+    var filteredProductList = [Products]()
     
     var viewModel = HomepageViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .systemGray6
         
         productsCollectionView.delegate = self
         productsCollectionView.dataSource = self
@@ -41,7 +43,7 @@ class HomepageVC: UIViewController {
         super.viewWillAppear(animated)
         viewModel.fetchProducts { result in
             switch result {
-            case .success(let products):
+            case .success(_):
                 print("Ürünler başarıyla yüklendi.")
             case .failure(let error):
                 print("Hata: \(error.localizedDescription)")
@@ -71,31 +73,57 @@ class HomepageVC: UIViewController {
     }
     
     
-    @IBAction func artanButtonTapped(_ sender: Any) {
-        viewModel.sortProductsDescending { [weak self] sortedProducts in
-                   self?.productList = sortedProducts
-                   self?.productsCollectionView.reloadData()
-               }
-    }
-    
-    @IBAction func azalanButtonTapped(_ sender: Any) {
+    @IBAction func sortButtonTapped(_ sender: Any) {
+        let alert = UIAlertController(title: "Sıralama Seç", message: "Ürünleri nasıl sıralamak istersiniz?", preferredStyle: .actionSheet)
         
         
-        viewModel.sortProductsAscending { [weak self] sortedProducts in
-                    self?.productList = sortedProducts
-                    self?.productsCollectionView.reloadData()
+        let defaultSortAction = UIAlertAction(title: "Varsayılan Sıralama", style: .default) { _ in
+            self.viewModel.fetchProducts { result in
+                switch result {
+                case .success(let products):
+                    self.productList = products
+                    self.productsCollectionView.reloadData()
+                case .failure(let error):
+                    print("Hata: \(error.localizedDescription)")
                 }
-    }
+            }
+        }
+        
+        
+        let sortHighToLowAction = UIAlertAction(title: "Fiyata Göre (Önce En Yüksek)", style: .default) { _ in
+            self.viewModel.sortProductsDescending { sortedProducts in
+                self.productList = sortedProducts
+                self.productsCollectionView.reloadData()
+            }
+        }
+        
+        
+        let sortLowToHighAction = UIAlertAction(title: "Fiyata Göre (Önce En Düşük)", style: .default) { _ in
+            self.viewModel.sortProductsAscending { sortedProducts in
+                self.productList = sortedProducts
+                self.productsCollectionView.reloadData()
+            }
+        }
+        
     
+        let cancelAction = UIAlertAction(title: "İptal", style: .cancel, handler: nil)
+        
+        alert.addAction(defaultSortAction)
+        alert.addAction(sortHighToLowAction)
+        alert.addAction(sortLowToHighAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
 }
+
 
 
 extension HomepageVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // Arama sorgusunu ViewModel'e gönder ve sonuçları al
-        viewModel.search(query: searchText) { [weak self] filteredProducts in
-            self?.productList = filteredProducts
-            self?.productsCollectionView.reloadData() // Sonuçları güncelle
+        viewModel.search(query: searchText) { filteredProducts in
+            self.productList = filteredProducts
+            self.productsCollectionView.reloadData()
         }
     }
 }
@@ -114,7 +142,7 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, Home
             cell.productImageView.kf.setImage(with: imageURL)
         }
         
-        cell.priceLabel.text = "\(product.fiyat!)"
+        cell.priceLabel.text = "\(product.fiyat!) ₺"
         cell.productNameLabel.text = product.ad
         
         cell.layer.borderColor = UIColor.lightGray.cgColor
@@ -124,26 +152,48 @@ extension HomepageVC: UICollectionViewDelegate, UICollectionViewDataSource, Home
         cell.homepageCellProtocol = self
         cell.indexPath = indexPath
         
+        cell.addToFavoritesButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        
+        viewModel.isProductFavorited(productID: product.id ?? 0) { isFavorited in
+            let imageName = isFavorited ? "heart.fill" : "heart"
+            cell.addToFavoritesButton.setImage(UIImage(systemName: imageName), for: .normal)
+        }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let product = productList[indexPath.row]
-        print(product.ad!, product.resim!, product.fiyat!, product.kategori!, product.marka!, product.id!)
         performSegue(withIdentifier: "toDetail", sender: product)
     }
     
     
     func addToFavorites(indexpath: IndexPath) {
         let product = productList[indexpath.row]
-        viewModel.addToFavorites(product: product) { result in
-            switch result {
-            case .success:
-                print("Ürün favorilere eklendi.")
-                
-                
-            case .failure(let error):
-                print(error.localizedDescription)
+        
+        viewModel.isProductFavorited(productID: product.id ?? 0) { isFavorited in
+            if isFavorited {
+                self.viewModel.removeProductFromFavorites(productID: product.id ?? 0) { result in
+                    switch result {
+                    case .success:
+                        DispatchQueue.main.async {
+                            self.productsCollectionView.reloadItems(at: [indexpath])
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            } else {
+                self.viewModel.addToFavorites(product: product) { result in
+                    switch result {
+                    case .success:
+                        DispatchQueue.main.async {
+                            self.productsCollectionView.reloadItems(at: [indexpath]) 
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
             }
         }
     }

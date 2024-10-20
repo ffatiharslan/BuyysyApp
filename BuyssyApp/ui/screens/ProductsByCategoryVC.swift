@@ -36,6 +36,8 @@ class ProductsByCategoryVC: UIViewController {
     private func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        
     }
     
     private func setupCollectionViewLayout() {
@@ -53,17 +55,23 @@ class ProductsByCategoryVC: UIViewController {
 }
 
 extension ProductsByCategoryVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return products.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCell", for: indexPath) as! CategoryProductCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductsByCategoryCell", for: indexPath) as! ProductsByCategoryCell
         let product = products[indexPath.row]
-        cell.nameLabel.text = product.ad
-        cell.categoryLabel.text = product.kategori
-        cell.priceLabel.text = "\(product.fiyat!)"
         
+        
+        if let imageURL = URL(string: "http://kasimadalan.pe.hu/urunler/resimler/\(product.resim!)") {
+            cell.productImageView.kf.setImage(with: imageURL)
+        }
+        
+        
+        cell.priceLabel.text = "\(product.fiyat!) ₺"
+        cell.productNameLabel.text = product.ad
         
         cell.layer.borderColor = UIColor.lightGray.cgColor
         cell.layer.borderWidth = 0.5

@@ -20,7 +20,7 @@ class RegisterVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        view.backgroundColor = .systemGray6
     }
     
     @IBAction func registerButtonTapped(_ sender: Any) {

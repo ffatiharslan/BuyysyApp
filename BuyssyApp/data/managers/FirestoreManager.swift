@@ -15,10 +15,8 @@ class FirestoreManager {
     private let db = Firestore.firestore()
     private let userID: String? = Auth.auth().currentUser?.uid
     
-    
     var favoriteProductList = BehaviorSubject<[Products]>(value: [Products]())
 
-    // Favorilere ürün ekleme
     func addProductToFavorites(product: Products, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let userID = userID else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Kullanıcı oturum açmamış."])))
@@ -43,7 +41,7 @@ class FirestoreManager {
         }
     }
 
-    // Favorilerden ürün çıkarma
+    
     func removeProductFromFavorites(productID: Int, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let userID = userID else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Kullanıcı oturum açmamış."])))
@@ -59,7 +57,7 @@ class FirestoreManager {
         }
     }
 
-    // Favori ürünleri getirme
+    
     func fetchFavoriteProducts(completion: @escaping (Result<[Products], Error>) -> Void) {
         guard let userID = userID else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Kullanıcı oturum açmamış."])))
@@ -88,6 +86,24 @@ class FirestoreManager {
                 }
                 self.favoriteProductList.onNext(list)
                 completion(.success(list))
+            }
+        }
+    }
+    
+    
+    
+    func isProductFavorited(productID: Int, completion: @escaping (Bool) -> Void) {
+        guard let userID = userID else {
+            completion(false)
+            return
+        }
+        
+        let docRef = db.collection("users").document(userID).collection("favorites").document("\(productID)")
+        docRef.getDocument { document, error in
+            if let document = document, document.exists {
+                completion(true)
+            } else {
+                completion(false)
             }
         }
     }

@@ -14,16 +14,15 @@ class LoginViewModel {
     private let authService = AuthenticationManager()
     
     func signInWithGoogle(presentingVC: UIViewController, completion: @escaping (Result<Void, Error>) -> Void) {
-            authService.signInWithGoogle(presentingVC: presentingVC, completion: completion)
-        }
-
-        func signInWithEmail(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
-            authService.signInWithEmail(email: email, password: password, completion: completion)
-        }
-
+        authService.signInWithGoogle(presentingVC: presentingVC, completion: completion)
+    }
     
     
-    // Oturum açık mı kontrol et
+    func signInWithEmail(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        authService.signInWithEmail(email: email, password: password, completion: completion)
+    }
+    
+    
     func isLoggedIn() -> Bool {
         return authService.checkIfLoggedIn()
     }

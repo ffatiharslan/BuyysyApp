@@ -9,6 +9,8 @@ import UIKit
 
 protocol CellProtocol {
     func deleteButtonTapped(indexPath: IndexPath)
+    func decrementCartProduct(indexPath: IndexPath)
+    func incrementCartProduct(indexPath: IndexPath)
 }
 
 class CartCell: UITableViewCell {
@@ -16,6 +18,10 @@ class CartCell: UITableViewCell {
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var brandLabel: UILabel!
     @IBOutlet weak var adetLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var totalPriceLabel: UILabel!
+    @IBOutlet weak var stepperStackView: UIStackView!
+    
     
     var cellProtocol: CellProtocol?
     var indexPath: IndexPath?
@@ -35,4 +41,13 @@ class CartCell: UITableViewCell {
         
          onRemoveButtonTapped?()
     }
+    
+    @IBAction func decrementButtonTapped(_ sender: Any) {
+        cellProtocol?.decrementCartProduct(indexPath: indexPath!)
+    }
+    
+    @IBAction func incrementButtonTapped(_ sender: Any) {
+        cellProtocol?.incrementCartProduct(indexPath: indexPath!)
+    }
+    
 }
